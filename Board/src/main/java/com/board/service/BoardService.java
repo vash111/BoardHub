@@ -12,4 +12,7 @@ public interface BoardService {
     
     // 페이징 처리된 게시물 목록
     List<BoardVO> getAllWithPaging(int offset, int limit);
+
+    // 검색 기능 추가
+    List<BoardVO> searchPosts(String keyword, int offset, int limit);
 }

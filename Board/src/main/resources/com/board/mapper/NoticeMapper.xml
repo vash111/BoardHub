@@ -6,20 +6,24 @@
 
 	<!-- 공지사항 등록 -->
 	<insert id="create">
-		INSERT INTO notice (id, title, content, writer, created_date, modified_date)
-		VALUES (notice_seq.NEXTVAL, #{title}, #{content}, #{writer},
+		INSERT INTO notice (id, title, content, writer,
+		created_date, modified_date)
+		VALUES (notice_seq.NEXTVAL, #{title},
+		#{content}, #{writer},
 		SYSTIMESTAMP, SYSTIMESTAMP)
 	</insert>
 
 	<!-- 공지사항 조회 -->
 	<select id="read" resultType="com.board.model.NoticeVO">
-		SELECT * FROM notice WHERE id = #{id}
+		SELECT * FROM notice WHERE id =
+		#{id}
 	</select>
 
 	<!-- 공지사항 수정 -->
 	<update id="update">
 		UPDATE notice
-		SET title = #{title}, content = #{content}, modified_date = SYSTIMESTAMP
+		SET title = #{title}, content =
+		#{content}, modified_date = SYSTIMESTAMP
 		WHERE id = #{id}
 	</update>
 
@@ -28,12 +32,23 @@
 		DELETE FROM notice WHERE id = #{id}
 	</delete>
 
+	<!-- 검색 기능 추가 -->
+	<select id="searchPosts" resultType="com.board.model.BoardVO"
+		parameterType="map">
+		SELECT * FROM notice
+		WHERE title LIKE '%' || #{keyword} || '%'
+		OR content LIKE '%' || #{keyword} || '%'
+		ORDER BY created_date DESC
+		OFFSET #{offset} ROWS FETCH NEXT #{limit} ROWS ONLY
+	</select>
+
 	<!-- 공지사항 목록 (페이징 처리) -->
 	<select id="getAllWithPaging"
 		resultType="com.board.model.NoticeVO">
 		SELECT * FROM notice
 		ORDER BY created_date DESC
-		OFFSET #{offset} ROWS FETCH NEXT #{limit} ROWS ONLY
+		OFFSET
+		#{offset} ROWS FETCH NEXT #{limit} ROWS ONLY
 	</select>
 
 </mapper>

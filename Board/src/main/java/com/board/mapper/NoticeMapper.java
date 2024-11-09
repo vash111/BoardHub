@@ -23,4 +23,7 @@ public interface NoticeMapper {
 
 	// 공지사항 목록 (페이징 처리)
 	List<NoticeVO> getAllWithPaging(@Param("offset") int offset, @Param("limit") int limit);
+	
+	// 검색 기능 추가
+    List<NoticeVO> searchPosts(@Param("keyword") String keyword, @Param("offset") int offset, @Param("limit") int limit);
 }

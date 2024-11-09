@@ -1,6 +1,7 @@
 package com.board.service;
 
 import com.board.mapper.NoticeMapper;
+import com.board.model.BoardVO;
 import com.board.model.NoticeVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,5 +41,10 @@ public class NoticeServiceImpl implements NoticeService {
     @Override
     public List<NoticeVO> getAllWithPaging(int offset, int limit) {
         return mapper.getAllWithPaging(offset, limit);
+    }
+    
+    @Override
+    public List<NoticeVO> searchPosts(String keyword, int offset, int limit) {
+        return mapper.searchPosts(keyword, offset, limit);
     }
 }

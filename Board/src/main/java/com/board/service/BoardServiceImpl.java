@@ -41,4 +41,9 @@ public class BoardServiceImpl implements BoardService {
     public List<BoardVO> getAllWithPaging(int offset, int limit) {
         return mapper.getAllWithPaging(offset, limit);
     }
+
+    @Override
+    public List<BoardVO> searchPosts(String keyword, int offset, int limit) {
+        return mapper.searchPosts(keyword, offset, limit);
+    }
 }

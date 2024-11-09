@@ -40,6 +40,16 @@
 		modified_date = SYSDATE
 		WHERE id = #{id}
 	</update>
+	
+	<!-- 검색 기능 추가 -->
+    <select id="searchPosts" resultType="com.board.model.BoardVO" parameterType="map">
+        SELECT * FROM inquiry
+        WHERE title LIKE '%' || #{keyword} || '%'
+        OR content LIKE '%' || #{keyword} || '%'
+        ORDER BY created_date DESC
+        OFFSET #{offset} ROWS FETCH NEXT #{limit} ROWS ONLY
+    </select>
+	
 
 	<!-- 댓글 작성 (관리자만 가능) -->
 	<update id="addComment" parameterType="map">

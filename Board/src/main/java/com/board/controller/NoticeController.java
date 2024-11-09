@@ -1,5 +1,6 @@
 package com.board.controller;
 
+import com.board.model.BoardVO;
 import com.board.model.NoticeVO;
 import com.board.service.NoticeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,17 @@ public class NoticeController {
 		model.addAttribute("currentPage", page);
 		return "notice/list";
 	}
+	
+	@GetMapping("/search")
+    public String search(@RequestParam("keyword") String keyword, @RequestParam(defaultValue = "0") int page, Model model) {
+        int limit = 10;
+        int offset = page * limit;
+        List<NoticeVO> searchResults = service.searchPosts(keyword, offset, limit);
+        model.addAttribute("boardList", searchResults);
+        model.addAttribute("currentPage", page);
+        model.addAttribute("keyword", keyword);
+        return "board/searchResults";
+    }
 
 	@GetMapping("/create")
 	public String createForm() {

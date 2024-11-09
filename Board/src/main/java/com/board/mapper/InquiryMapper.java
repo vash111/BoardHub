@@ -19,5 +19,8 @@ public interface InquiryMapper {
 
 	// 문의 수정
 	void update(InquiryVO inquiry);
+	
+	// 검색 기능 추가
+    List<InquiryVO> searchPosts(@Param("keyword") String keyword, @Param("offset") int offset, @Param("limit") int limit);
 
 }
