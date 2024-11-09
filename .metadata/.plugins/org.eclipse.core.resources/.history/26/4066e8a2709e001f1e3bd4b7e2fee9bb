@@ -1,0 +1,13 @@
+
+package com.board.model;
+
+public class BoardVO {
+    private Long id;
+    private String title;
+    private String content;
+    private String writer;
+    private String createdDate;
+    private String modifiedDate;
+
+    // Getters and Setters
+}

@@ -1,0 +1,13 @@
+package com.board.service;
+
+import com.board.model.NoticeVO;
+import java.util.List;
+
+public interface NoticeService {
+    void create(NoticeVO notice);
+    NoticeVO read(Long id);
+    void update(NoticeVO notice);
+    void delete(Long id);
+    List<NoticeVO> getAll();
+    List<NoticeVO> getAllWithPaging(int offset, int limit);
+}

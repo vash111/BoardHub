@@ -1,0 +1,13 @@
+
+package com.board.service;
+
+import java.util.List;
+import com.board.model.BoardVO;
+
+public interface BoardService {
+    void create(BoardVO board);
+    BoardVO read(Long id);
+    void update(BoardVO board);
+    void delete(Long id);
+    List<BoardVO> getAll();
+}

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mapper namespace="com.board.mapper.InquiryMapper">
+
+    <insert id="create" parameterType="com.board.model.InquiryVO">
+        INSERT INTO inquiry (title, content, writer, created_date, modified_date)
+        VALUES (#{title}, #{content}, #{writer}, SYSTIMESTAMP, SYSTIMESTAMP)
+    </insert>
+
+    <select id="read" parameterType="Long" resultType="com.board.model.InquiryVO">
+        SELECT * FROM inquiry WHERE id = #{id}
+    </select>
+
+    <select id="getAllWithPaging" resultType="com.board.model.InquiryVO">
+        SELECT * FROM inquiry ORDER BY created_date DESC
+        OFFSET #{offset} ROWS FETCH NEXT #{limit} ROWS ONLY
+    </select>
+
+    <update id="addComment" parameterType="map">
+        UPDATE inquiry SET comment = #{comment}, modified_date = SYSTIMESTAMP WHERE id = #{id}
+    </update>
+
+</mapper>

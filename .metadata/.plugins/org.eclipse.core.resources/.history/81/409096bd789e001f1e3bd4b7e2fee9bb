@@ -1,0 +1,23 @@
+<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ page pageEncoding="UTF-8" %>
+
+<html>
+<head>
+    <title>공지사항 조회</title>
+</head>
+<body>
+    <h2>공지사항 조회</h2>
+    <h3>${notice.title}</h3>
+    <p>작성자: ${notice.writer}</p>
+    <p>작성일: ${notice.createdDate}</p>
+    <p>내용: ${notice.content}</p>
+    <form action="<c:url value='/notice/update' />" method="post">
+        <input type="hidden" name="id" value="${notice.id}" />
+        <button type="submit">수정</button>
+    </form>
+    <form action="<c:url value='/notice/delete/${notice.id}' />" method="post" onsubmit="return confirm('정말로 삭제하시겠습니까?');">
+        <button type="submit">삭제</button>
+    </form>
+    <a href="<c:url value='/notice/list' />">목록으로 돌아가기</a>
+</body>
+</html>

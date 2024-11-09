@@ -1,0 +1,19 @@
+
+<html>
+<head><title>게시글 조회</title></head>
+<body>
+    <h2>게시글 조회</h2>
+    <h3>${board.title}</h3>
+    <p>작성자: ${board.writer}</p>
+    <p>작성일: ${board.createdDate}</p>
+    <p>내용: ${board.content}</p>
+    <form action="<c:url value='/board/update' />" method="post">
+        <input type="hidden" name="id" value="${board.id}" />
+        <button type="submit">수정</button>
+    </form>
+    <form action="<c:url value='/board/delete/${board.id}' />" method="post">
+        <button type="submit">삭제</button>
+    </form>
+    <a href="<c:url value='/board/list' />">목록으로 돌아가기</a>
+</body>
+</html>

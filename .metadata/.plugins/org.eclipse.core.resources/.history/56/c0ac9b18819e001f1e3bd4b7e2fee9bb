@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.board.mapper.NoticeMapper">
+
+    <!-- 공지사항 등록 -->
+    <insert id="create">
+        INSERT INTO notice (id, title, content, writer, created_date, modified_date)
+        VALUES (notice_seq.NEXTVAL, #{title}, #{content}, #{writer},
+        SYSTIMESTAMP, SYSTIMESTAMP)
+    </insert>
+
+    <!-- 공지사항 조회 -->
+    <select id="read" resultType="com.board.model.NoticeVO">
+        SELECT * FROM notice WHERE id = #{id}
+    </select>
+
+    <!-- 공지사항 수정 -->
+    <update id="update">
+        UPDATE notice
+        SET title = #{title}, content = #{content}, modified_date = SYSTIMESTAMP
+        WHERE id = #{id}
+    </update>
+
+    <!-- 공지사항 삭제 -->
+    <delete id="delete">
+        DELETE FROM notice WHERE id = #{id}
+    </delete>
+
+    <!-- 공지사항 목록 (페이징 처리) -->
+    <select id="getAllWithPaging" resultType="com.board.model.NoticeVO">
+        SELECT * FROM notice
+        ORDER BY created_date DESC
+        OFFSET #{offset} ROWS FETCH NEXT #{limit} ROWS ONLY
+    </select>
+
+</mapper>

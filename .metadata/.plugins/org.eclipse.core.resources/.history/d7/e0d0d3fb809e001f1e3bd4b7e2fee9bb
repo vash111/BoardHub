@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mapper namespace="com.board.mapper.InquiryMapper">
+
+    <!-- 문의 등록 -->
+    <insert id="create" parameterType="com.board.model.InquiryVO">
+        INSERT INTO inquiry (title, content, writer, created_date, modified_date)
+        VALUES (#{title}, #{content}, #{writer}, SYSTIMESTAMP, SYSTIMESTAMP)
+    </insert>
+
+    <!-- 문의 조회 -->
+    <select id="read" parameterType="Long" resultType="com.board.model.InquiryVO">
+        SELECT * FROM inquiry WHERE id = #{id}
+    </select>
+
+    <!-- 문의 목록 (페이징 처리) -->
+    <select id="getAllWithPaging" resultType="com.board.model.InquiryVO">
+        SELECT * FROM inquiry ORDER BY created_date DESC
+        OFFSET #{offset} ROWS FETCH NEXT #{limit} ROWS ONLY
+    </select>
+
+    <!-- 댓글 작성 -->
+    <update id="addComment" parameterType="map">
+        UPDATE inquiry SET comment = #{comment}, modified_date = SYSTIMESTAMP WHERE id = #{id}
+    </update>
+
+</mapper>

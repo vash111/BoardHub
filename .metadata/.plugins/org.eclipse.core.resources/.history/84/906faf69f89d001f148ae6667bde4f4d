@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.zerock.mapper.BoardMapper">
+
+    <select id="getList" resultType="org.zerock.domain.BoardVO">
+        SELECT * FROM voc WHERE vno > 0
+    </select>
+
+    <insert id="insert">
+        INSERT INTO voc (vno, title, content, user_id)
+        VALUES (seq_voc.nextval, #{title}, #{content}, #{user_id})
+    </insert>
+
+    <select id="read" resultType="org.zerock.domain.BoardVO">
+        SELECT * FROM voc WHERE vno = #{vno}
+    </select>
+
+    <update id="update">
+        UPDATE voc
+        SET title = #{title}, content = #{content}
+        WHERE vno = #{vno}
+    </update>
+
+    <delete id="delete">
+        DELETE FROM voc WHERE vno = #{vno}
+    </delete>
+</mapper>

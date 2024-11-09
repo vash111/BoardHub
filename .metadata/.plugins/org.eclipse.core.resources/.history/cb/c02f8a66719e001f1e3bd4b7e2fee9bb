@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="com.board.mapper.BoardMapper">
+    <insert id="create">
+        INSERT INTO vam_board (title, content, writer, created_date, modified_date)
+        VALUES (#{title}, #{content}, #{writer}, NOW(), NOW())
+    </insert>
+
+    <select id="read" resultType="com.board.model.BoardVO">
+        SELECT * FROM vam_board WHERE id = #{id}
+    </select>
+
+    <update id="update">
+        UPDATE vam_board SET title = #{title}, content = #{content}, modified_date = NOW() WHERE id = #{id}
+    </update>
+
+    <delete id="delete">
+        DELETE FROM vam_board WHERE id = #{id}
+    </delete>
+
+    <select id="getAll" resultType="com.board.model.BoardVO">
+        SELECT * FROM vam_board ORDER BY created_date DESC
+    </select>
+</mapper>
+ 
+
+
+

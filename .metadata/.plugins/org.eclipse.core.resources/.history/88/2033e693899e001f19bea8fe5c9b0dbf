@@ -1,0 +1,68 @@
+package com.board.controller;
+
+import com.board.model.InquiryVO;
+import com.board.service.InquiryService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@Controller
+@RequestMapping("/inquiry")
+public class InquiryController {
+
+    @Autowired
+    private InquiryService service;
+
+    @GetMapping("/list")
+    public String list(@RequestParam(defaultValue = "0") int page, Model model) {
+        int limit = 10;
+        int offset = page * limit;
+        List<InquiryVO> inquiries = service.getAllWithPaging(offset, limit);
+        model.addAttribute("inquiries", inquiries);
+        model.addAttribute("currentPage", page);
+        return "inquiry/list";
+    }
+
+    @GetMapping("/create")
+    public String createForm() {
+        return "inquiry/create";
+    }
+
+    @PostMapping("/create")
+    public String create(InquiryVO inquiry) {
+        service.create(inquiry);
+        return "redirect:/inquiry/list";
+    }
+    
+    @GetMapping("/update/{id}")
+    public String updateForm(@PathVariable Long id, Model model) {
+        InquiryVO inquiry = service.read(id);
+        model.addAttribute("inquiry", inquiry);
+        return "inquiry/update"; // 수정 폼 화면
+    }
+
+    @PostMapping("/update")
+    public String update(InquiryVO inquiry) {
+        service.update(inquiry);
+        return "redirect:/inquiry/read/" + inquiry.getId(); // 수정 후 상세보기 화면으로 리디렉션
+    }
+
+    @GetMapping("/read/{id}")
+    public String read(@PathVariable Long id, Model model) {
+        InquiryVO inquiry = service.read(id);
+        model.addAttribute("inquiry", inquiry);
+        return "inquiry/read";
+    }
+
+    // 댓글 작성 (관리자만 가능)
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PostMapping("/comment")
+    public String addComment(@RequestParam Long id, @RequestParam String comment) {
+        service.addComment(id, comment);
+        return "redirect:/inquiry/read/" + id;
+    }
+}

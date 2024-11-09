@@ -1,0 +1,51 @@
+@Controller
+@RequestMapping("/board")
+public class BoardController {
+
+    @Autowired
+    private BoardService boardService;
+
+    @GetMapping("/")
+    public String list(Model model) {
+        List<BoardVO> boards = boardService.getList();
+        model.addAttribute("boards", boards);
+        return "board/list"; // JSP 페이지로 이동
+    }
+
+    @GetMapping("/write")
+    public String writeForm() {
+        return "board/write"; // 게시글 작성 페이지로 이동
+    }
+
+    @PostMapping("/write")
+    public String write(BoardVO board) {
+        boardService.insert(board);
+        return "redirect:/board/"; // 작성 후 목록으로 리다이렉트
+    }
+
+    @GetMapping("/read/{bno}")
+    public String read(@PathVariable Long bno, Model model) {
+        BoardVO board = boardService.read(bno);
+        model.addAttribute("board", board);
+        return "board/read"; // 게시글 상세 페이지로 이동
+    }
+
+    @GetMapping("/edit/{bno}")
+    public String editForm(@PathVariable Long bno, Model model) {
+        BoardVO board = boardService.read(bno);
+        model.addAttribute("board", board);
+        return "board/edit"; // 게시글 수정 페이지로 이동
+    }
+
+    @PostMapping("/edit")
+    public String edit(BoardVO board) {
+        boardService.update(board);
+        return "redirect:/board/read/" + board.getBno(); // 수정 후 상세 페이지로 리다이렉트
+    }
+
+    @PostMapping("/delete/{bno}")
+    public String delete(@PathVariable Long bno) {
+        boardService.delete(bno);
+        return "redirect:/board/"; // 삭제 후 목록으로 리다이렉트
+    }
+}

@@ -1,0 +1,14 @@
+package com.board.model;
+
+import java.time.LocalDateTime;
+
+public class NoticeVO {
+    private Long id;
+    private String title;
+    private String content;
+    private String writer;
+    private LocalDateTime createdDate;
+    private LocalDateTime modifiedDate;
+
+    // Getters and Setters
+}

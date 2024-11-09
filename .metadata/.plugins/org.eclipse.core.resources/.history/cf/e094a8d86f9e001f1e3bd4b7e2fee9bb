@@ -1,0 +1,22 @@
+<mapper namespace="com.board.mapper.BoardMapper">
+    <insert id="create">
+        INSERT INTO board (title, content, writer, created_date, modified_date)
+        VALUES (#{title}, #{content}, #{writer}, NOW(), NOW())
+    </insert>
+
+    <select id="read" resultType="com.board.model.BoardVO">
+        SELECT * FROM board WHERE id = #{id}
+    </select>
+
+    <update id="update">
+        UPDATE board SET title = #{title}, content = #{content}, modified_date = NOW() WHERE id = #{id}
+    </update>
+
+    <delete id="delete">
+        DELETE FROM board WHERE id = #{id}
+    </delete>
+
+    <select id="getAll" resultType="com.board.model.BoardVO">
+        SELECT * FROM board ORDER BY created_date DESC
+    </select>
+</mapper>

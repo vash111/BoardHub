@@ -1,0 +1,23 @@
+package com.board.service;
+
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration("file:src/main/webapp/WEB-INF/spring/root-context.xml")
+public class BoardServiceTests {
+    
+    @Autowired
+    private BoardService service;
+    
+    @Test
+    public void testEnroll() {
+        
+        BoardVO vo = new BoardVO();
+        
+        vo.setTitle("service test");
+        vo.setContent("service test");
+        vo.setWriter("service test");
+        
+        service.enroll(vo);
+        
+    }
+ 
+}

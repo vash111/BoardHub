@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+       xsi:schemaLocation="http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+                           http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+
+    <!-- HikariCP Configuration -->
+    <bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
+        <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
+        <property name="jdbcUrl" value="jdbc:oracle:thin:@211.43.93.41:1521:xe" />
+        <property name="username" value="test" />
+        <property name="password" value="1234" />
+    </bean>
+
+    <!-- DataSource Configuration -->
+    <bean id="datasource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
+        <constructor-arg ref="hikariConfig" />
+    </bean>
+
+    <!-- MyBatis SqlSessionFactory -->
+   <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+    <property name="dataSource" ref="datasource" />
+    <!-- 경로 수정: com/board/mapper 폴더로 수정 -->
+    <property name="mapperLocations" value="classpath:src/main/resources/com/board/mapper/*.xml" />
+</bean>
+
+
+    <!-- MyBatis Mapper Scanning -->
+    <mybatis-spring:scan base-package="com.board.mapper" />
+
+    <!-- Component Scanning -->
+    <context:component-scan base-package="com.board.model" />
+    <context:component-scan base-package="com.board.service" />
+    <context:component-scan base-package="com.board.mapper" /> <!-- Add mapper package scanning -->
+
+</beans>

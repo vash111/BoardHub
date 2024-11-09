@@ -1,0 +1,30 @@
+package org.zerock.domain;
+
+import java.time.LocalDateTime;
+import lombok.Builder;
+import lombok.Data;
+
+@Data
+@Builder
+public class BoardVO {
+
+    private Long bno; // 게시글 번호
+    private String title; // 제목
+    private String content; // 내용
+    private String writer; // 작성자
+    private LocalDateTime regdate; // 작성일
+    private LocalDateTime updatedate; // 수정일
+
+    // 기본 생성자
+    public BoardVO() {}
+
+    // 모든 필드를 초기화하는 생성자
+    public BoardVO(Long bno, String title, String content, String writer, LocalDateTime regdate, LocalDateTime updatedate) {
+        this.bno = bno;
+        this.title = title;
+        this.content = content;
+        this.writer = writer;
+        this.regdate = regdate;
+        this.updatedate = updatedate;
+    }
+}

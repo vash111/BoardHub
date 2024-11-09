@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.board.mapper.InquiryMapper">
+	<!-- 문의 등록 -->
+	<insert id="create" parameterType="com.board.model.InquiryVO">
+		INSERT INTO inquiry (title, writer, content, created_date)
+		VALUES (#{title}, #{writer}, #{content}, NOW())
+	</insert>
+
+	<!-- 문의 조회 -->
+	<select id="read" parameterType="long"
+		resultType="com.board.model.InquiryVO">
+		SELECT * FROM inquiry WHERE id = #{id}
+	</select>
+
+	<!-- 문의 목록 (페이징 처리) -->
+	<select id="getAllWithPaging" parameterType="map"
+		resultType="com.board.model.InquiryVO">
+		SELECT * FROM inquiry
+		LIMIT #{offset}, #{limit}
+	</select>
+
+	<!-- 댓글 작성 -->
+	<update id="addComment">
+		UPDATE inquiry
+		SET comment = #{comment}
+		WHERE id = #{id}
+	</update>
+</mapper>
